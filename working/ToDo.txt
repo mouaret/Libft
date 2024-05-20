@@ -18,7 +18,7 @@ ToDo List libft :
   ok= tolower
   ok= toupper
   ok= strlen
-  = strncmp
+  ok= strncmp
   • strchr
   • strnstr
   • strlcpy
