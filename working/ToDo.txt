@@ -8,7 +8,7 @@ ToDo List libft :
   + newly added
   = Piscine restored
   ok : tested & validated
-- 1- libc functions :
+- 1: libc functions :
   ok= atoi
   ok= isalpha
   ok+ isalnum
@@ -21,9 +21,9 @@ ToDo List libft :
   ok= strncmp
   ok+ strchr
   ok+ strnstr
-  ??+ strlcpy
-  • strlcat
-  • strrchr
+  ..+ strlcpy
+  ok+ strlcat
+  ok+ strrchr
   OK+ bzero
   ok+ memset
   ok +memchr
