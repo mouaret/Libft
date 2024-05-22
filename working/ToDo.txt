@@ -21,14 +21,14 @@ ToDo List libft :
   ok= strncmp
   ok+ strchr
   ok+ strnstr
-  ..+ strlcpy
+  ok+ strlcpy
   ok+ strlcat
   ok+ strrchr
   OK+ bzero
   ok+ memset
-  ok +memchr
-  • memcpy
-  • memcmp
+  ok+ memchr
+  ok+ memcpy
+  ok+ memcmp
   • memmove
   • calloc (malloc)
   • strdup (malloc)
