@@ -5,6 +5,18 @@
 
 #include "libft.h"
 
+void TEST_STRNSTR(char *haystack, char *needle, char *expected_result)
+{
+	char *result = ft_strnstr(haystack, needle, ft_strlen(needle));
+	if (result == (char *)expected_result) 
+	{
+    	printf("Test: PASS:'%s' in '%s' [result='%s']\n", needle, haystack, result);
+  	} else 
+	{
+    	printf("Test: FAIL:'%s' in '%s' (expected '%s')\n", needle, haystack, expected_result ? expected_result : "(null)"); \
+		printf("%p, %p \n", result, expected_result);
+  	}
+}
 
 void test_ft_strchr(const char *haystack, char needle, char *expected_output)
 {
@@ -43,6 +55,58 @@ void test_strchr(const char *haystack, char needle, char *expected_output) {
   }
 }
 */
+void test_strlcat(void)
+{
+	  char dst[100];
+
+  // Empty destination
+  ft_memset(dst, 0, sizeof(dst));
+  if (ft_strlcat(dst, "hello", sizeof(dst)) != 5) 
+  	printf("Test 1 : failed\n");
+  else	
+	printf("Test 1 : PASS\n");
+
+
+  // Destination with some content
+  ft_memset(dst, 0, sizeof(dst));
+  strcpy(dst, "world");
+  if (ft_strlcat(dst, "!", sizeof(dst)) != 6)
+    printf("Test 2 failed\n");
+  else
+  	printf("Test 2 : PASS\n");
+  
+
+  // Truncation case (source string doesn't fit entirely)
+  ft_memset(dst, 0, sizeof(dst));
+  strcpy(dst, "small");
+  if (ft_strlcat(dst, "buffer", sizeof(dst)) != 11)
+    printf("Test 3 failed\n");
+  else
+  	printf("Test 3 : PASS\n");
+
+  // Null destination
+  memset(dst, 0, sizeof(dst));
+  if (ft_strlcat(NULL, "hello", sizeof(dst)) != 0)
+    printf("Test 4 failed\n");
+  else
+  	printf("Test 4 : PASS\n");
+
+  // Null source
+  memset(dst, 0, sizeof(dst));
+  if (ft_strlcat(dst, NULL, sizeof(dst)) != 0)
+    printf("Test 5 failed\n");
+  else
+  	printf("Test 5 : PASS\n");
+
+
+  // Zero destination size
+  memset(dst, 0, sizeof(dst));
+  if (ft_strlcat(dst, "hello", 0) != 0) 
+    printf("Test 6 failed\n");
+  else
+  	printf("Test 6 : PASS\n");
+
+}
 
 int main(int argc, char **argv)
 {
@@ -89,9 +153,9 @@ int main(int argc, char **argv)
 	c = 'a'; printf("%c [%d]is %c\n", c, c, ft_tolower(c));
 
 	printf("\n--- strlen ---\n");
-	s = "Hello";  printf("[%s] is %d\n", s, ft_strlen(s));
-	s = "Hello "; printf("[%s] is %d\n", s, ft_strlen(s));
-	s = "";       printf("[%s] is %d\n", s, ft_strlen(s));
+	s = "Hello";  printf("[%s] is %zu\n", s, ft_strlen(s));
+	s = "Hello "; printf("[%s] is %zu\n", s, ft_strlen(s));
+	s = "";       printf("[%s] is %zu\n", s, ft_strlen(s));
 
 	printf("\n--- strncmp ---\n");
 	char *t1, *t2;
@@ -116,17 +180,49 @@ int main(int argc, char **argv)
 	t1 = "\127"; t2 = "A"; n = 1;
 	printf("%s:%s:[%d] ==> %d/%d\n", t1, t2, n, ft_strncmp(t1, t2, n), strncmp(t1,t2,n));
 
-	printf("\n--- strncmp ---\n");
-	const char haystack1[] = "This is a test string"; c = 'z';
-	test_ft_strchr(haystack1, c, NULL);
-	//printf("[%s]:%c:[%s]\n", haystack1, c, ft_strchr(haystack1, c));
-
+	printf("\n--- ft_strchr ---\n");
 	char *str;
+	const char *haystack1 = "This is a test string"; test_ft_strchr(haystack1, 'z', NULL);
 	str= "Hello, world!";  test_ft_strchr(str, 'H', (char *)&str[0]);
 	str="This is a story"; test_ft_strchr(str, 's', &str[3]);
   	str="Hello, world!";   test_ft_strchr(str, 'd', &str[11]);
 	str="Find the last character"; test_ft_strchr(str, '\0', &str[ft_strlen(str)]);
 	//str="Find last"; test_ft_strchr(str, 't', &(str[ft_strlen(str)-1]));
+
+	printf("\n--- ft_strnstr ---\n");
+	str="This is a test"; 		TEST_STRNSTR(str, "This", str);
+  	str="This is another test  "; TEST_STRNSTR(str, "test", &str[16]);
+  	str="No match here"; 		TEST_STRNSTR(str, "substring", NULL);
+  	str="Some string"; 			TEST_STRNSTR(str, "", str); // Empty needle
+  	str="Short haystack"; 		TEST_STRNSTR(str, "too long", NULL); // Needle longer than haystack
+  	str="Find \0null"; 			TEST_STRNSTR(str, "\0null", str); // Substring with null character
+	str=""; 			TEST_STRNSTR(str, "find", NULL); // Substring with null character
+
+	printf("\n--- ft_memset ---\n");
+	unsigned char tab2[100];
+	ft_memset((void *)tab2, 128, 10);
+	for (int i=0; i<5; i++)
+		printf("%d - ", tab2[i]);
+	printf("\n");
+
+	printf("\n--- ft_bzero ---\n");
+	ft_bzero((void *)tab2, 3);
+	for (int i=0; i<5; i++)
+		printf("%d - ", tab2[i]);
+	printf("\n");
+
+	printf("\n--- ft_memchr ---\n");
+	ft_memset((void *)tab2, 'A', 10);
+	tab2[7]= 'B';
+	printf("%s : should be 'BAA'\n", (char *) ft_memchr((void *)tab2, 'B', 10));
+
+	printf("\n--- ft_strlcat ---\n");
+	test_strlcat();
+
+	printf("\n--- ft_strlcpy ---\n");	// will be tested later
+	char tab[1000]; char *src;
+	src = "This is a test string"; ft_strlcpy(tab, src, 10); printf("'%s'\n", tab);
+	src = ""; ft_strlcpy(tab, src, 10); printf("'%s'\n", tab);
 
 	return 0;
 }

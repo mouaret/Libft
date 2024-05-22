@@ -43,7 +43,7 @@ ToDo List libft :
   • ft_putchar_fd
   • ft_putstr_fd
   • ft_putendl_fr
-  • ft_putnbr_fd
+• ft_putnbr_fd
 - 3- bonus part
      libft.h
 typedef struct s_list
