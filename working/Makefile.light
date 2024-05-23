@@ -1,0 +1,26 @@
+NAME = libft.a
+
+CCFLAGS = -Wall -Wextra -Werror
+
+SRC = ft_atoi.c ft_strlen.c ft_isalpha.c
+INC = libft.h
+OBJ := $(SRC:.c=.o)
+
+%.o: %.c
+	cc $(CCFLAGS) -c $< -o $@
+
+$(NAME): $(SRC) $(INC) $(OBJ) 
+	ar -rcs $(NAME) $(OBJ) 
+
+all: $(NAME)
+
+clean: 
+	rm -f libft.a
+
+fclean:  clean
+	rm -f $(OBJ)
+
+re: fclean all
+
+print_obj:
+	echo Objects: $(OBJ)

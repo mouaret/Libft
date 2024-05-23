@@ -9,6 +9,7 @@ ToDo List libft :
   = Piscine restored
   ok : tested & validated
 - 1: libc functions :
+=====================
   ok= atoi
   ok= isalpha
   ok+ isalnum
@@ -29,10 +30,12 @@ ToDo List libft :
   ok+ memchr
   ok+ memcpy
   ok+ memcmp
-  • memmove
-  • calloc (malloc)
-  • strdup (malloc)
+  ok+ memmove
+??• calloc (malloc)
+??• strdup (malloc)
+_________________________
 - 2- additional functions
+=========================
   • ft_substr
   • ft_strjoin
   • ft_strtrim
@@ -44,14 +47,18 @@ ToDo List libft :
   • ft_putstr_fd
   • ft_putendl_fr
 • ft_putnbr_fd
+_________________________
 - 3- bonus part
+=========================
      libft.h
 typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
 } 					t_list;
+_________________________
 - 4- bonus functions
+=========================
   • ft_lstnew
   • ft_lstadd_front
   • ft_lstsize
