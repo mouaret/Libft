@@ -35,9 +35,11 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	size_t	src_length;
 	size_t	remaining;
 
-	if (!dst || !src || size <= 0)
+	if (!dst || !src || size < 0)
 		return (0);
 	src_length = ft_strlen((char *)src);
+	if (size == 0)
+		return (src_length);
 	dest_length = ft_strlen(dst);
 	remaining = size - dest_length;
 	if (remaining <= 0)

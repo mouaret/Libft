@@ -6,7 +6,7 @@
 /*   By: souaret <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 22:03:37 by souaret           #+#    #+#             */
-/*   Updated: 2024/05/22 22:11:20 by souaret          ###   ########.fr       */
+/*   Updated: 2024/05/23 21:41:36 by souaret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	size_t  i;
+	size_t	i;
 
 	if (!dst)
 		return (NULL);

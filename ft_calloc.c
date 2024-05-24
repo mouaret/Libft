@@ -6,7 +6,7 @@
 /*   By: souaret <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:01:14 by souaret           #+#    #+#             */
-/*   Updated: 2024/05/23 19:20:37 by souaret          ###   ########.fr       */
+/*   Updated: 2024/05/23 21:48:39 by souaret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 		return (NULL);
 	mem = malloc(total_size);
 	if (mem == NULL)
-		return NULL;
+		return (NULL);
 	ft_memset(mem, 0, total_size);
 	return (mem);
 }

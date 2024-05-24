@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <limits.h>
 
 char	*ft_strnstr2(char *big, char *little, size_t len)
 {
@@ -21,7 +22,8 @@ char	*ft_strnstr2(char *big, char *little, size_t len)
 	while (big[i] != '\0' && i < len)
 	{
 		j = 0;
-		while (big[i + j] != '\0' && little[j] != '\0' && (j < len))
+//		while (big[i + j] != '\0' && little[j] != '\0' && (i < len))
+		while (little[j] != '\0' && (i + j) < len)
 		{
 			if (big[i + j] == little[j])
 				j++;
@@ -31,9 +33,10 @@ char	*ft_strnstr2(char *big, char *little, size_t len)
 				i++;
 			}
 		}
-		if (j == len)
+		if (little[j] == '\0')
 			return (big + i);
-		i++;
+		else
+			return (NULL);
 	}
 	return (0);
 }
@@ -45,5 +48,7 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	n_len = ft_strlen((char *)little);
 	if (n_len == 0 || big == little)
 		return ((char *)big);
+	if  (len == ULLONG_MAX)
+		len = ft_strlen((char *)big);
 	return (ft_strnstr2((char *)big, (char *)little, len));
 }
