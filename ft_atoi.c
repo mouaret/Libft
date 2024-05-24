@@ -6,17 +6,20 @@
 /*   By: souaret <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:34:34 by souaret           #+#    #+#             */
-/*   Updated: 2024/05/20 14:54:49 by souaret          ###   ########.fr       */
+/*   Updated: 2024/05/24 17:58:50 by souaret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 int	ft_atoi(const char *str)
 {
 	int	val;
 	int	sign;
 
-	while (*str == ' ')
-		str++;
+	while (*str == ' ' || *str == '\n' || *str == '\t' || *str == '\v'    \
+            || *str == '\f' || *str == '\r')
+        str++;
 	sign = 1;
 	if (*str == 0)
 		return (0);
