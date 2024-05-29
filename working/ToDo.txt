@@ -41,12 +41,12 @@ _________________________
   ok+ ft_strtrim
   ok+ ft_split
   ok+ ft_itoa
-  • ft_strmapi
-  • ft_striteri
-  • ft_putchar_fd
-  ??+ ft_putstr_fd
-  ??+ ft_putendl_fd
-  ??+ ft_putnbr_fd
+  ok+ ft_strmapi
+  ok+ ft_striteri
+  ok+ ft_putchar_fd
+  ok+ ft_putstr_fd
+  ok+ ft_putendl_fd
+  ok+ ft_putnbr_fd
 _________________________
 - 3- bonus part
 =========================
@@ -68,4 +68,4 @@ _________________________
   ok+ ft_lstclear
   ok+ ft_lstiter
   ok+ ft_lstmap
-  
+ 
