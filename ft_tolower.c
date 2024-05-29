@@ -6,22 +6,13 @@
 /*   By: souaret <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:35:04 by souaret           #+#    #+#             */
-/*   Updated: 2024/05/20 17:13:03 by souaret          ###   ########.fr       */
+/*   Updated: 2024/05/29 17:38:08 by souaret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isupper(int c)
+int	ft_tolower(int c)
 {
-	if ((c >= 'A') && (c <= 'Z'))
-		return (1);
-	else
-		return (0);
-}
-
-int	ft_tolower(char c)
-{
-	if (ft_isupper(c))
-		return (c + ('a' - 'A'));
-	else
-		return (c);
+	if (c >= 'A' && c <= 'Z')
+		c += 32;
+	return (c);
 }
