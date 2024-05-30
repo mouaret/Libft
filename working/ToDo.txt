@@ -68,4 +68,21 @@ _________________________
   ok+ ft_lstclear
   ok+ ft_lstiter
   ok+ ft_lstmap
- 
+_________________________
+- 5- residual errors
+=========================
+ a) war-machine	: OK
+ b) Tripouille	: OK
+ c) alelievr	: errors  	$ paco -t --testers 3
+	* warning [no crash] only
+	* no real errors
+	adapt to same behaviors as the standard functions [crash when something is wrong].
+	- ok:ft_memcpy
+	- ok:ft_memmove
+	- ok:ft_strlcat
+	- ok:ft_strdup
+
+ d) fsoares		: OK
+ e) --strict    : errors 	$ paco --strict
+
+	

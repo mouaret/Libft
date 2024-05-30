@@ -6,7 +6,7 @@
 /*   By: souaret <souaret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:54:33 by souaret           #+#    #+#             */
-/*   Updated: 2024/05/29 19:00:18 by souaret          ###   ########.fr       */
+/*   Updated: 2024/05/29 20:41:30 by souaret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ static char	*ft_strtrim2(char const *s1, char const *set)
 	while (s && *s && (ft_check_set(s + n1, (char *)set) == 1))
 			n1++;
 	n2 = ft_strlen(s1) - 1;
+	if (n1 == n2 + 1)
+		return (ft_malloc_empty());
 	while (n2 >= 0 && (ft_check_set(s + n2, (char *)set) == 1))
 			n2--;
 	str = malloc(n2 - n1 +1 + 1);
@@ -71,10 +73,7 @@ static char	*ft_strtrim2(char const *s1, char const *set)
 		return (NULL);
 	d = str;
 	while (n1 <= n2)
-	{
-		*d++ = s[n1];
-		n1++;
-	}
+		*d++ = s[n1++];
 	*d = '\0';
 	return (str);
 }

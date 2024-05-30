@@ -6,13 +6,14 @@
 /*   By: souaret <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 15:47:12 by souaret           #+#    #+#             */
-/*   Updated: 2024/05/22 20:44:35 by souaret          ###   ########.fr       */
+/*   Updated: 2024/05/30 16:41:49 by souaret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strncpy(char *dest, char *src, unsigned int n)
+/*
+static char	*ft_strncpy(char *dest, char *src, unsigned int n)
 {
 	unsigned int	i;
 
@@ -26,7 +27,7 @@ char	*ft_strncpy(char *dest, char *src, unsigned int n)
 		dest[i++] = '\0';
 	return (dest);
 }
-
+*/
 size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
 	size_t	i;
@@ -35,7 +36,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	size_t	src_length;
 	size_t	remaining;
 
-	if (!dst || !src || size < 0)
+	if (!dst && !src)
 		return (0);
 	src_length = ft_strlen((char *)src);
 	if (size == 0)

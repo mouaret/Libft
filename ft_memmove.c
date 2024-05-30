@@ -6,7 +6,7 @@
 /*   By: souaret <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 11:47:33 by souaret           #+#    #+#             */
-/*   Updated: 2024/05/23 21:48:01 by souaret          ###   ########.fr       */
+/*   Updated: 2024/05/30 16:37:39 by souaret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	char		*d;
 	const char	*s;
 
-	if (dest == NULL || src == NULL)
+	if (dest == NULL && src == NULL)
 		return (NULL);
 	if (n == 0)
 		return (dest);
