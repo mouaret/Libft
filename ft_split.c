@@ -6,7 +6,7 @@
 /*   By: souaret <souaret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 18:51:41 by souaret           #+#    #+#             */
-/*   Updated: 2024/05/29 15:32:28 by souaret          ###   ########.fr       */
+/*   Updated: 2024/05/31 21:34:35 by souaret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,84 +18,124 @@
 	2- Allocation du vecteur
 	3- Parsing des segments
 *************************************/
-static int	ft_count_segs(char *s, char c)
-{
-	size_t	count_word;
-	int		in_word;
-
-	count_word = 0;
-	in_word = 0;
-	while (*s)
-	{
-		if (*s == c)
-			in_word = 0;
-		else
-		{
-			if (!in_word)
-				count_word++;
-			in_word = 1;
-		}
-		s++;
-	}
-	return (count_word);
-}
-
-static char	*ft_split_cpy(const char *s, int deb, int fin)
+static int	ft_split_cpy(const char *s, t_split_vars *s_v)
 {
 	int		n;
 	int		i;
 	char	*str;
 
-	n = fin - deb + 1;
+	n = s_v->end - s_v->start + 1;
 	str = malloc(n + 1);
 	if (!str)
-		return (NULL);
-	i = 0;
-	while (n--)
+		return (0);
+	else
 	{
-		str[i] = s[deb + i];
+		i = 0;
+		while (n--)
+		{
+			str[i] = s[s_v->start + i];
+			i++;
+		}
+		str[i] = '\0';
+		s_v->vect[s_v->pos_seg++] = str;
+	}
+	return (1);
+}
+
+static void	ft_count_segs(const char *s, char c, t_split_vars *s_v)
+{
+	int		i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[s_v->start + i] == c)
+		{
+			if (s_v->in_word == 1)
+			{
+				s_v->end = s_v->start + i - 1;
+				return ;
+			}
+		}
+		else
+		{
+			if (!s_v->in_word)
+				s_v->start += i;
+			s_v->in_word = 1;
+		}
 		i++;
 	}
-	str[i] = '\0';
-	return (str);
+	if (s_v->in_word == 1)
+		s_v->end = s_v->start + i - 1;
+	return ;
 }
 
 static void	ft_vars_init(t_split_vars *v)
 {
 	v->in_word = 0;
-	v->deb = 0;
-	v->fin = 0;
+	v->start = 0;
+	v->end = 0;
+	v->pos_seg = 0;
+	v->nb_seg = 0;
+	v->vect = NULL;
 }
 
+char	**ft_split(char const *s, char c)
+{
+	char			**vect;
+	t_split_vars	s_v;
+	int				i;
+	int				r;
+
+	ft_vars_init(&s_v);
+	vect = NULL;
+	i = 0;
+	while (s[i])
+	{
+		ft_count_segs(s, c, &s_v);
+		r =  ft_split_cpy(s, &s_v);
+		if (!r)
+		{
+			while (--s_v.pos_seg)
+				free(s_v.vect[s_v.pos_seg]);
+			return (NULL);
+		}
+		i++;
+	}
+	
+	return (vect);
+}
+/*
 static void	ft_split_extract_n(char const *s, char c, char **vect, int *pos_seg)
 {
 	t_split_vars	s_v;
 
 	ft_vars_init(&s_v);
-	while (s[s_v.fin])
+	while (s[s_v.end])
 	{
-		if (s[s_v.fin] == c)
+		if (s[s_v.end] == c)
 		{
 			if (s_v.in_word)
-				vect[pos_seg[0]++] = \
-				ft_split_cpy(s, s_v.deb, s_v.fin - 1);
+				vect[pos_seg[0]++] = ft_split_cpy(s, &s_v);
 			if (s_v.in_word)
 				s_v.in_word = 0;
 		}
 		else
 		{
 			if (!s_v.in_word)
-				s_v.deb = s_v.fin;
+				s_v.start = s_v.end;
 			if (!s_v.in_word)
 				s_v.in_word = 1;
 		}
-		s_v.fin++;
+		s_v.end++;
 	}
 	if (s_v.in_word)
-		vect[pos_seg[0]++] = ft_split_cpy(s, s_v.deb, s_v.fin - 1);
+		vect[pos_seg[0]++] = ft_split_cpy(s, &s_v);
 	vect[pos_seg[0]] = 0;
 }
+*/
 
+/*
 char	**ft_split(char const *s, char c)
 {
 	size_t	n;
@@ -109,5 +149,17 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	pos_seg = 0;
 	ft_split_extract_n(s, c, vect, &pos_seg);
+	pos_seg = 0;
+	while (vect[pos_seg])
+	{
+		if (vect[pos_seg] == (char *)1)
+		{
+			pos_seg = 0;
+			while (vect[pos_seg] && vect[pos_seg] != (char *)1)
+				free(vect[pos_seg++]);
+		}
+		return (NULL);
+	}
 	return (vect);
 }
+*/
