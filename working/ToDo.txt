@@ -88,7 +88,7 @@ _________________________
 - 6- findings
 =========================
  a) free intermediary mallocs, when erros occurs before end task.
-	- ft_lstmap:
-	- ft_split
-	- lstnew 
+	- OK: ft_lstmap:
+	- OK: lstnew 
+	- NOK: ft_split
 
