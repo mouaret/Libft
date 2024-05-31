@@ -84,5 +84,11 @@ _________________________
 
  d) fsoares		: OK
  e) --strict    : errors 	$ paco --strict
+_________________________
+- 6- findings
+=========================
+ a) free intermediary mallocs, when erros occurs before end task.
+	- ft_lstmap:
+	- ft_split
+	- lstnew 
 
-	
