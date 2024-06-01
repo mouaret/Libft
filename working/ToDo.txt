@@ -91,4 +91,6 @@ _________________________
 	- OK: ft_lstmap:
 	- OK: lstnew 
 	- NOK: ft_split
+		paco : OK
+		paco --strict : NOK
 

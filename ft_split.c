@@ -6,48 +6,24 @@
 /*   By: souaret <souaret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 18:51:41 by souaret           #+#    #+#             */
-/*   Updated: 2024/05/31 23:28:38 by souaret          ###   ########.fr       */
+/*   Updated: 2024/06/01 16:50:35 by souaret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-#include <stdio.h>	// to be removed
 /*************************************
 #include <stdio.h>	// to be removed
 	1- Calculer le nombre de segments
 	2- Allocation du vecteur
 	3- Parsing des segments
 *************************************/
-static int	ft_split_cpy(const char *s, char c, t_split_vars *s_v)
-{
-	int		n;
-	char	*str;
-
-	n = s_v->end - s_v->start + 1;
-	str = malloc(n + 1);
-	if (!str)
-		return (0);
-	else
-	{
-		str[n] = '\0';
-		while (--n >= 0)
-			str[n] = s[s_v->start + n];
-		s_v->vect[s_v->pos_seg++] = str;
-	}
-	s_v->start = s_v->end + 1;
-	while (s[s_v->start] && s[s_v->start] == c)
-		s_v->start++;
-	s_v->end = s_v->start - 1;
-	return (1);
-}
-
 static int	ft_count_segs(char *s, char c)
 {
-	size_t	count_words;
+	size_t	count_word;
 	int		in_word;
 
-	count_words = 0;
+	count_word = 0;
 	in_word = 0;
 	while (*s)
 	{
@@ -56,134 +32,110 @@ static int	ft_count_segs(char *s, char c)
 		else
 		{
 			if (!in_word)
-				count_words++;
+				count_word++;
 			in_word = 1;
 		}
 		s++;
 	}
-printf("nb=%zu,  ", count_words); fflush(stdout);
-	return (count_words);
+	return (count_word);
 }
-static void	ft_find_segs(const char *s, char c, t_split_vars *s_v)
-{
-	int		i;
-	char	cc;
 
-	i = 0;
-	while (s[s_v->start + i])
+static void	*ft_vars_init(t_split_vars *v, const char *s, char c)
+{
+	int	n;
+
+	v->in_word = 0;
+	v->deb = 0;
+	v->fin = 0;
+	v->pos_seg = 0;
+	v->vect = NULL;
+	n = ft_count_segs((char *)s, c);
+	v->vect = (char **)malloc(sizeof(char *) * (n + 1));
+	if (!v->vect)
+		return (NULL);
+	while (n >= 0)
 	{
-		cc = s[s_v->start + i];
-		if (s[s_v->start + i] == c)
+		v->vect[n] = NULL;
+		n--;
+	}
+	return (v->vect);
+}
+
+static char	*ft_s_cpy(char action, const char *s, t_split_vars *sv, int fin)
+{
+	int		n;
+	int		i;
+	char	*str;
+
+	if (action == '1')
+	{
+		n = fin - sv->deb + 1;
+		str = malloc(n + 1);
+		if (!str)
+			return (NULL);
+		i = 0;
+		while (n--)
 		{
-			if (s_v->in_word == 1)
-			{
-				s_v->end = s_v->start + i - 1;
-				s_v->in_word = 0;
-				return ;
-			}
+			str[i] = s[sv->deb + i];
+			i++;
+		}
+		str[i] = '\0';
+		sv->vect[sv->pos_seg++] = str;
+		sv->vect[sv->pos_seg] = NULL;
+		return (str);
+	}
+	i = sv->pos_seg - 1;
+	while (i-- >= 0)
+		free(sv->vect[i]);
+	return (NULL);
+}
+
+static void	*ft_split_extract_n(char const *s, char c, t_split_vars *sv)
+{
+	while (s[sv->fin])
+	{
+		if (s[sv->fin] == c)
+		{
+			if (sv->in_word)
+				if (!ft_s_cpy('1', s, sv, sv->fin - 1))
+					return (ft_s_cpy('0', s, sv, sv->fin - 1));
+			if (sv->in_word)
+				sv->in_word = 0;
 		}
 		else
 		{
-			if (!s_v->in_word)
-				s_v->start += i;
-			s_v->in_word = 1;
+			if (!sv->in_word)
+				sv->deb = sv->fin;
+			if (!sv->in_word)
+				sv->in_word = 1;
 		}
-		i++;
+		sv->fin++;
 	}
-	if (s_v->in_word == 1)
-		s_v->end = s_v->start + i - 1;
-printf("start=%d, end=%d\n", s_v->start, s_v->end); fflush(stdout);
-	return ;
+	if (sv->in_word)
+		if (!ft_s_cpy('1', s, sv, sv->fin - 1))
+			return (ft_s_cpy('0', s, sv, sv->fin - 1));
+	return (sv->vect);
 }
 
-static void	ft_vars_init(t_split_vars *v)
-{
-	v->in_word = 0;
-	v->start = 0;
-	v->end = 0;
-	v->pos_seg = 0;
-	v->nb_seg = 0;
-	v->vect = NULL;
-}
-
+/*
+	//if (!s || *s == '\0')
+*/
 char	**ft_split(char const *s, char c)
 {
 	t_split_vars	s_v;
+	char			**v;
 
-	ft_vars_init(&s_v);
-	s_v.nb_seg = ft_count_segs((char *)s, c);
-	s_v.vect = (char **)malloc(sizeof(char *) * (s_v.nb_seg + 1));
-	if (!s_v.vect)
-		return (NULL);
-	while (s[s_v.start])
+	if (!s)
 	{
-		ft_find_segs(s, c, &s_v);
-			printf("start=%d, end=%d, p;os_seg=%d", s_v.start, s_v.end, s_v.pos_seg);
-		if (!ft_split_cpy(s, c, &s_v))
-		{
-			while (--s_v.pos_seg)
-				free(s_v.vect[s_v.pos_seg]);
-			free(s_v.vect);
+		v = (char **) malloc(1 * sizeof(char *));
+		if (!v)
 			return (NULL);
-		}
+		v[0] = NULL;
+		return (v);
 	}
+	if (!ft_vars_init(&s_v, s, c))
+		return (NULL);
+	if (!ft_split_extract_n(s, c, &s_v))
+		return (NULL);
 	return (s_v.vect);
 }
-/*
-static void	ft_split_extract_n(char const *s, char c, char **vect, int *pos_seg)
-{
-	t_split_vars	s_v;
-
-	ft_vars_init(&s_v);
-	while (s[s_v.end])
-	{
-		if (s[s_v.end] == c)
-		{
-			if (s_v.in_word)
-				vect[pos_seg[0]++] = ft_split_cpy(s, &s_v);
-			if (s_v.in_word)
-				s_v.in_word = 0;
-		}
-		else
-		{
-			if (!s_v.in_word)
-				s_v.start = s_v.end;
-			if (!s_v.in_word)
-				s_v.in_word = 1;
-		}
-		s_v.end++;
-	}
-	if (s_v.in_word)
-		vect[pos_seg[0]++] = ft_split_cpy(s, &s_v);
-	vect[pos_seg[0]] = 0;
-}
-*/
-
-/*
-char	**ft_split(char const *s, char c)
-{
-	size_t	n;
-	char	**vect;
-	int		pos_seg;
-
-	vect = NULL;
-	n = ft_count_segs((char *)s, c);
-	vect = (char **)malloc(sizeof(char *) * (n + 1));
-	if (!vect)
-		return (NULL);
-	pos_seg = 0;
-	ft_split_extract_n(s, c, vect, &pos_seg);
-	pos_seg = 0;
-	while (vect[pos_seg])
-	{
-		if (vect[pos_seg] == (char *)1)
-		{
-			pos_seg = 0;
-			while (vect[pos_seg] && vect[pos_seg] != (char *)1)
-				free(vect[pos_seg++]);
-		}
-		return (NULL);
-	}
-	return (vect);
-}
-*/

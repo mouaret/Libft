@@ -6,7 +6,7 @@
 /*   By: souaret <souaret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:00:43 by souaret           #+#    #+#             */
-/*   Updated: 2024/05/31 20:38:50 by souaret          ###   ########.fr       */
+/*   Updated: 2024/06/01 15:42:00 by souaret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,12 @@ typedef struct s_list
 
 typedef struct s_split_vars
 {
-	int	in_word;
-	int	start;
-	int	end;
-	int	pos_seg;
-	int	nb_seg;
+	int		in_word;
+	int		deb;
+	int		fin;
+	int		pos_seg;
 	char	**vect;
-}	t_split_vars;
+}		t_split_vars;
 
 int		ft_atoi(const char *nptr);
 int		ft_isalnum(int c);
