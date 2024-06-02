@@ -90,7 +90,12 @@ _________________________
  a) free intermediary mallocs, when erros occurs before end task.
 	- OK: ft_lstmap:
 	- OK: lstnew 
-	- NOK: ft_split
-		paco : OK
-		paco --strict : NOK
+	- OK: ft_split
+ b) rework
+	* redo :
+		ft_substr (using ft_strdup code)
+		ft_split : simplier version
+ c) status:
+	- paco : OK
+	- paco --strict : NOK
 

@@ -582,6 +582,14 @@ int main(int argc, char **argv)
 	tab2[7]= 'B';
 	printf("%s : should be 'BAA'\n", (char *) ft_memchr((void *)tab2, 'B', 10));
 
+	printf("\n--- ft_split ---\n");
+	str = "This is a test string";
+	str_v = ft_split(str, ' '); ft_split_print(str_v); if (str_v) free(str_v);
+/*
+	str_v = ft_split(str, '%'); if (str_v) free(str_v);
+	str_v = ft_split("", ' '); if (str_v) free(str_v);
+*/
+
 	printf("\n--- ft_strlcat ---\n");
 	test_strlcat();
 
@@ -614,13 +622,6 @@ int main(int argc, char **argv)
 
 	printf("\n--- ft_sttrim ---\n");
 	
-	printf("\n--- ft_split ---\n");
-	str = "This is a test string";
-	str_v = ft_split(str, ' '); ft_split_print(str_v); if (str_v) free(str_v);
-/*
-	str_v = ft_split(str, '%'); if (str_v) free(str_v);
-	str_v = ft_split("", ' '); if (str_v) free(str_v);
-*/
 
 	printf("\n--- ft_itoa ---\n");
 	n = 1234; printf("'%d' = '%s'\n", n, ft_itoa(n));
