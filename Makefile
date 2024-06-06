@@ -6,7 +6,7 @@
 #    By: souaret <souaret@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/15 12:06:38 by souaret           #+#    #+#              #
-#    Updated: 2024/05/29 18:28:57 by souaret          ###   ########.fr        #
+#    Updated: 2024/06/06 16:17:09 by souaret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = libft.a
 
 CC = cc
 
-CFLAGS= -Wall -Wextra -Werror -I./$(INCL) -g
+CFLAGS= -Wall -Wextra -Werror -g3 -I./$(INCL)
 
 SRC =	ft_atoi.c ft_isalpha.c ft_isalnum.c	 ft_isascii.c	ft_isdigit.c \
 		ft_isprint.c ft_tolower.c ft_toupper.c ft_tolower.c ft_strncmp.c \
@@ -45,7 +45,7 @@ all: $(NAME)
 clean:
 	@rm -f $(OBJ)
 
-fclean: clean
+fclean: clean 
 	rm -f $(NAME)
 
 re: fclean all
@@ -71,13 +71,13 @@ testv:	$(NAME) $(OBJ) $(INC)
 	valgrind -s --track-origins=yes ./libft_test
 #	@rm -f libft_test
 
-re_test:
+retest:
 	rm -f libft_test
 
 print_obj:
 	@echo $(OBJ)
 
-.PHONY: re fclean clean all
+#.PHONY: re fclean clean all
 
 
 #temp:
